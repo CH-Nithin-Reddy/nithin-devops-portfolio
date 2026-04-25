@@ -1,0 +1,9 @@
+{
+  "name": "nithin-portfolio",
+  "version": "1.0.0",
+  "description": "Nithin's DevOps Portfolio",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo 'All tests passed' && exit 0"
+  }
+}

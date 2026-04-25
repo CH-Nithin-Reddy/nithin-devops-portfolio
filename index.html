@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nithin | DevOps Engineer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+    }
+
+    header {
+      background: #111;
+      padding: 60px 40px;
+      text-align: center;
+      border-bottom: 2px solid #00ff88;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: #00ff88;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      background: #111;
+      padding: 16px;
+      border-bottom: 1px solid #222;
+    }
+
+    nav a {
+      color: #00ff88;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover { color: #fff; }
+
+    section {
+      max-width: 900px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      color: #00ff88;
+      margin-bottom: 20px;
+      border-left: 4px solid #00ff88;
+      padding-left: 12px;
+    }
+
+    .about p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #ccc;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-card {
+      background: #1a1a1a;
+      border: 1px solid #00ff8840;
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      font-weight: 600;
+      color: #00ff88;
+      transition: transform 0.2s;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-4px);
+      border-color: #00ff88;
+    }
+
+    .project-card {
+      background: #1a1a1a;
+      border: 1px solid #00ff8830;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .project-card h3 {
+      color: #00ff88;
+      margin-bottom: 8px;
+    }
+
+    .project-card p {
+      color: #aaa;
+      line-height: 1.7;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #00ff8815;
+      color: #00ff88;
+      border: 1px solid #00ff8840;
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.8rem;
+      margin: 6px 4px 0 0;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      background: #00ff88;
+      color: #000;
+      padding: 12px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: opacity 0.2s;
+    }
+
+    .contact-links a:hover { opacity: 0.85; }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #444;
+      border-top: 1px solid #1a1a1a;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Nithin</h1>
+    <p>DevOps Engineer · CI/CD · Cloud · Automation</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>
+      I'm Nithin, a DevOps Engineer passionate about building automated, 
+      scalable infrastructure. I specialize in designing CI/CD pipelines, 
+      containerizing applications with Docker, and deploying production 
+      systems on AWS. I believe in shipping fast, failing safely, 
+      and automating everything.
+    </p>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">Jenkins</div>
+      <div class="skill-card">Docker</div>
+      <div class="skill-card">AWS EC2</div>
+      <div class="skill-card">GitHub</div>
+      <div class="skill-card">Linux</div>
+      <div class="skill-card">CI/CD</div>
+      <div class="skill-card">Kubernetes</div>
+      <div class="skill-card">Node.js</div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+
+    <div class="project-card">
+      <h3>🚀 End-to-End CI/CD Pipeline</h3>
+      <p>
+        Designed and deployed a full CI/CD pipeline using Jenkins, Docker, 
+        and AWS EC2. Automated build, test, and deployment stages triggered 
+        by GitHub webhooks.
+      </p>
+      <span class="tag">Jenkins</span>
+      <span class="tag">Docker</span>
+      <span class="tag">AWS</span>
+      <span class="tag">GitHub</span>
+    </div>
+
+    <div class="project-card">
+      <h3>🐳 Dockerized Microservices</h3>
+      <p>
+        Containerized a multi-service application using Docker Compose. 
+        Managed networking, volumes, and environment configs across services.
+      </p>
+      <span class="tag">Docker</span>
+      <span class="tag">Compose</span>
+      <span class="tag">Linux</span>
+    </div>
+
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-links">
+      <a href="https://github.com/" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+      <a href="mailto:nithin@email.com">Email</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Nithin · Built & Deployed via CI/CD Pipeline</p>
+  </footer>
+
+</body>
+</html>
