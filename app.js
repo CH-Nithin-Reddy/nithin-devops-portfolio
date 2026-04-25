@@ -4,10 +4,12 @@ const path = require('path');
 
 const server = http.createServer((req, res) => {
   const filePath = path.join(__dirname, 'public', 'index.html');
-  fs.readFile(filePath, (err, data) => {
+  
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
+      console.error('Error reading file:', err);
       res.writeHead(500);
-      res.end('Error loading page');
+      res.end('Error loading page: ' + err.message);
       return;
     }
     res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -15,6 +17,6 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(3000, () => {
+server.listen(3000, '0.0.0.0', () => {
   console.log('Portfolio running on port 3000');
 });
