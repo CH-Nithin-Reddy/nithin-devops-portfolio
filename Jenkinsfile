@@ -3,8 +3,10 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "nithin-portfolio"
-        CONTAINER_NAME = "nithin-portfolio-app"
-        PORT = "3000"
+        BLUE_CONTAINER = "nithin-portfolio-blue"
+        GREEN_CONTAINER = "nithin-portfolio-green"
+        BLUE_PORT = "3000"
+        GREEN_PORT = "3001"
     }
 
     stages {
@@ -18,9 +20,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building Docker image...'
+                echo 'Building new Docker image...'
                 retry(3) {
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                    sh 'docker build -t ${DOCKER_IMAGE}:new .'
                 }
             }
         }
@@ -28,37 +30,56 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'docker run --rm ${DOCKER_IMAGE} npm test'
+                sh 'docker run --rm ${DOCKER_IMAGE}:new npm test'
             }
         }
 
-        stage('Backup Old Container') {
+        stage('Deploy Green') {
             steps {
-                echo 'Backing up old container...'
+                echo 'Deploying GREEN container...'
                 sh '''
-                    docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:previous || true
-                '''
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying container...'
-                sh '''
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
+                    docker stop ${GREEN_CONTAINER} || true
+                    docker rm ${GREEN_CONTAINER} || true
                     docker run -d \
-                        --name ${CONTAINER_NAME} \
-                        -p ${PORT}:3000 \
+                        --name ${GREEN_CONTAINER} \
+                        -p ${GREEN_PORT}:3000 \
                         --restart always \
-                        ${DOCKER_IMAGE}
+                        ${DOCKER_IMAGE}:new
                 '''
             }
         }
 
-        stage('Health Check') {
+        stage('Health Check Green') {
             steps {
-                echo 'Running health check...'
+                echo 'Checking GREEN container health...'
+                retry(5) {
+                    sleep(time: 5, unit: 'SECONDS')
+                    sh 'curl -f http://localhost:3001 || exit 1'
+                }
+            }
+        }
+
+        stage('Switch Traffic') {
+            steps {
+                echo 'GREEN is healthy - Switching traffic...'
+                sh '''
+                    docker stop ${BLUE_CONTAINER} || true
+                    docker rm ${BLUE_CONTAINER} || true
+                    docker stop ${GREEN_CONTAINER} || true
+                    docker rm ${GREEN_CONTAINER} || true
+                    docker run -d \
+                        --name ${BLUE_CONTAINER} \
+                        -p ${BLUE_PORT}:3000 \
+                        --restart always \
+                        ${DOCKER_IMAGE}:new
+                    docker tag ${DOCKER_IMAGE}:new ${DOCKER_IMAGE}:previous
+                '''
+            }
+        }
+
+        stage('Health Check Final') {
+            steps {
+                echo 'Final health check on port 3000...'
                 retry(5) {
                     sleep(time: 5, unit: 'SECONDS')
                     sh 'curl -f http://localhost:3000 || exit 1'
@@ -70,22 +91,22 @@ pipeline {
 
     post {
         success {
-            echo '✅ Pipeline SUCCESS - Portfolio is LIVE at port 3000'
+            echo '✅ Blue/Green Deployment SUCCESS - Portfolio LIVE at port 3000'
         }
         failure {
-            echo '❌ Pipeline FAILED - Rolling back to previous version...'
+            echo '❌ Deployment FAILED - Rolling back...'
             sh '''
-                docker stop ${CONTAINER_NAME} || true
-                docker rm ${CONTAINER_NAME} || true
+                docker stop ${GREEN_CONTAINER} || true
+                docker rm ${GREEN_CONTAINER} || true
                 docker run -d \
-                    --name ${CONTAINER_NAME} \
-                    -p 3000:3000 \
+                    --name ${BLUE_CONTAINER} \
+                    -p ${BLUE_PORT}:3000 \
                     --restart always \
-                    ${DOCKER_IMAGE}:previous || echo "No previous version found"
+                    ${DOCKER_IMAGE}:previous || echo "No previous version to rollback"
             '''
         }
         always {
-            echo '🧹 Cleaning up unused Docker images...'
+            echo '🧹 Cleaning up...'
             sh 'docker image prune -f'
         }
     }
