@@ -178,7 +178,7 @@ Visit: `http://localhost:3000`
 
 ## 👤 Author
 
-**Nithin (CH Nithin Reddy)**
+**CH Nithin Reddy**
 DevOps Engineer · CI/CD · Cloud · Automation
 
 - GitHub: [CH-Nithin-Reddy](https://github.com/CH-Nithin-Reddy)
