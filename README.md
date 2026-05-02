@@ -184,13 +184,6 @@ DevOps Engineer · CI/CD · Cloud · Automation
 - GitHub: [CH-Nithin-Reddy](https://github.com/CH-Nithin-Reddy)
 - LinkedIn: [linkedin.com/in/nithin](https://linkedin.com)
 - Email: nithin@email.com
-
----
-
-## 📄 License
-
-MIT License — feel free to use this project as a reference.
-
 ---
 
 *Built and deployed via CI/CD Pipeline 🔥*
