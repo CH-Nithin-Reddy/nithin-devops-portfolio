@@ -91,10 +91,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Blue/Green Deployment SUCCESS - Portfolio LIVE at port 3000'
+            echo 'Blue/Green Deployment SUCCESS - Portfolio LIVE at port 3000'
         }
         failure {
-            echo '❌ Deployment FAILED - Rolling back...'
+            echo 'Deployment FAILED - Rolling back...'
             sh '''
                 docker stop ${GREEN_CONTAINER} || true
                 docker rm ${GREEN_CONTAINER} || true
@@ -106,7 +106,7 @@ pipeline {
             '''
         }
         always {
-            echo '🧹 Cleaning up...'
+            echo 'Cleaning up...'
             sh 'docker image prune -f'
         }
     }
